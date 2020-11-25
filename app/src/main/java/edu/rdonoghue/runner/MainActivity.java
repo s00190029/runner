@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static java.lang.Math.PI;
 import static java.lang.Math.round;
 import static java.math.BigDecimal.*;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
 
         btnShowRun = findViewById(R.id.btnShowRun);
+        btnShowRun.setEnabled(false);
 
         time = findViewById(R.id.tvTimeNum);
         timer = new CountUpTimer(30000) {
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         };
 
+
+
     }
 
 
@@ -61,9 +65,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.unregisterListener(this,mSensor);
     }
 
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
+    }
 
     public void doStart(View view){
         timer.start();
+        internalSteps = 0;
         btnShowRun.setEnabled(false);
         Toast.makeText(this, "Started counting", Toast.LENGTH_LONG).show();
     }
@@ -71,12 +80,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void doStop(View view){
         timer.cancel();
         btnShowRun.setEnabled(true);
+        /*
+        if (time.getText().toString() == "0" || steps.getText().toString() == "0") {
+            btnShowRun.setEnabled(false);
+        }
+        else {
+            btnShowRun.setEnabled(true);
+        }
+        */
+
         Toast.makeText(this, "Stopped Run", Toast.LENGTH_SHORT).show();
     }
 
     public void doReset(View view){
         doStop(view);
         time.setText("0");
+        steps.setText("0");
+        internalSteps = 0;
         btnShowRun.setEnabled(false);
         Toast.makeText(this, "Timer reset", Toast.LENGTH_SHORT).show();
     }
@@ -88,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Intent showRun = new Intent(view.getContext(), showRun.class);
         showRun.putExtra("seconds", time.getText().toString());
         showRun.putExtra("stepsOut", steps.getText().toString());
+
+
         startActivity(showRun);
     }
 
