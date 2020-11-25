@@ -23,14 +23,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView time, steps;
     Button btnShowRun;
     CountUpTimer timer;
-    private final double HI_STEP = 11.0;     // upper mag limit
-    private final double LO_STEP = 8.0;      // lower mag limit
-    boolean highLimit = false;      // detect high limit
+    private final int maxStep = 11;
+    private final int minStep = 8;
+    boolean highLimit = false;
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
     int internalSteps;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +97,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float Y = Math.abs(event.values[1]);
         float Z = Math.abs(event.values[2]);
 
+        double mag = (Math.sqrt((X*X) +(Y*Y) + (Z*Z)));
+
+        if(mag>maxStep && highLimit ==false){
+            highLimit = true;
+        }
+        if (mag<minStep && highLimit == true)
+        {
+            internalSteps++;
+            steps.setText(String.valueOf(internalSteps));
+            highLimit = false;
+        }
+
 /* get a magnitude number using Pythagorus's Theorem
         //double mag = round(Math.sqrt((X*X) + (Y*Y) + (Z*Z)), 2);
         double test = round
@@ -113,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             tvSteps.setText(String.valueOf(counter));
             highLimit = false;
         }
-
+*/
     }
 
     @Override
