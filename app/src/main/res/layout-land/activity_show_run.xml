@@ -22,7 +22,7 @@
         android:id="@+id/tvMetresNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="188dp"
         android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toStartOf="@+id/tvMetresLabelMt"
@@ -102,7 +102,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvSecondsLabelIn"
         app:layout_constraintTop_toBottomOf="@+id/tvMetresNum"
-        app:layout_constraintVertical_bias="0.341" />
+        app:layout_constraintVertical_bias="0.036" />
 
     <TextView
         android:id="@+id/tvSecondsSec"
@@ -120,8 +120,8 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="516dp"
+        android:layout_marginBottom="12dp"
         android:onClick="doClose"
         android:text="CLOSE"
         app:layout_constraintBottom_toBottomOf="parent"
